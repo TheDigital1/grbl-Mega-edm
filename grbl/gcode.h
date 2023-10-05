@@ -205,7 +205,7 @@ typedef struct {
   // float q;      // G82 peck drilling
   float r;         // Arc radius
   float s;         // Spindle speed
-  uint8_t t;       // Tool selection
+  float t;       // Tool selection
   float xyz[3];    // X,Y,Z Translational axes
 } gc_values_t;
 
@@ -215,7 +215,7 @@ typedef struct {
 
   float spindle_speed;          // RPM
   float feed_rate;              // Millimeters/min
-  uint8_t tool;                 // Tracks tool number. NOT USED.
+  float tool;                 // Tracks tool number. NOT USED.
   int32_t line_number;          // Last line number sent
 
   float position[N_AXIS];       // Where the interpreter considers the tool to be at this point in the code

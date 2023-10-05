@@ -150,7 +150,9 @@ extern volatile uint8_t sys_rt_exec_state;   // Global realtime executor bitflag
 extern volatile uint8_t sys_rt_exec_alarm;   // Global realtime executor bitflag variable for setting various alarms.
 extern volatile uint8_t sys_rt_exec_motion_override; // Global realtime executor bitflag variable for motion-based overrides.
 extern volatile uint8_t sys_rt_exec_accessory_override; // Global realtime executor bitflag variable for spindle/coolant overrides.
-
+#ifdef EDM
+extern volatile uint8_t sys_gap_read_state;   // Indicates when an analog read should occur.  Used to coordinate the ADC read in the RT cycle.
+#endif
 #ifdef DEBUG
   #define EXEC_DEBUG_REPORT  bit(0)
   extern volatile uint8_t sys_rt_exec_debug;

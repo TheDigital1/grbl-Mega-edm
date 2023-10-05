@@ -72,7 +72,13 @@ void spindle_stop()
 // and stepper ISR. Keep routine small and efficient.
 void spindle_set_speed(uint16_t pwm_value)
 {
+  #ifdef EDM
+  SPINDLE_OCR_REGISTER = 2; // Set PWM output level.
+  SPINDLE_OCRA_REGISTER = (SPINDLE_PWM_MAX_VALUE - pwm_value); //Invert pwm as we are converting to a duty to control frequency
+  #else
   SPINDLE_OCR_REGISTER = pwm_value; // Set PWM output level.
+  #endif
+
   #ifdef SPINDLE_ENABLE_OFF_WITH_ZERO_SPEED
     if (pwm_value == SPINDLE_PWM_OFF_VALUE) {
       spindle_stop();

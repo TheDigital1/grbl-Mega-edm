@@ -31,6 +31,9 @@ volatile uint8_t sys_rt_exec_state;   // Global realtime executor bitflag variab
 volatile uint8_t sys_rt_exec_alarm;   // Global realtime executor bitflag variable for setting various alarms.
 volatile uint8_t sys_rt_exec_motion_override; // Global realtime executor bitflag variable for motion-based overrides.
 volatile uint8_t sys_rt_exec_accessory_override; // Global realtime executor bitflag variable for spindle/coolant overrides.
+#ifdef EDM
+volatile uint8_t sys_gap_read_state;   // Indicates when an analog read should occur.  Used to coordinate the ADC read in the RT cycle.
+#endif
 #ifdef DEBUG
   volatile uint8_t sys_rt_exec_debug;
 #endif
@@ -83,12 +86,15 @@ int main(void)
     sys_rt_exec_alarm = 0;
     sys_rt_exec_motion_override = 0;
     sys_rt_exec_accessory_override = 0;
-
+    #ifdef EDM
+    sys_gap_read_state = 0;
+    #endif
     // Reset Grbl primary systems.
     serial_reset_read_buffer(); // Clear serial read buffer
     gc_init(); // Set g-code parser to default state
     spindle_init();
     coolant_init();
+    gap_init();
     limits_init();
     probe_init();
     sleep_init();

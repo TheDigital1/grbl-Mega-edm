@@ -56,7 +56,9 @@ void sleep_init()
 
 
 // Increment sleep counter with each timer overflow.
-ISR(TIMER3_OVF_vect) { sleep_counter++; }
+ISR(TIMER3_OVF_vect) { 
+  sleep_counter++; 
+  }
 
 
 // Starts sleep timer if running conditions are satified. When elaped, sleep mode is executed.

@@ -774,7 +774,17 @@ void st_prep_buffer()
   if (bit_istrue(sys.step_control,STEP_CONTROL_END_MOTION)) { return; }
 
   while (segment_buffer_tail != segment_next_head) { // Check if we need to fill the buffer.
-
+    
+    if (!(gap_flags & GAP_FLAG_SHORT_RECOVERY_ACTIVE))//Check to see if we need to update the history buffer
+    {
+      if (path_history[0][X_AXIS] < (sys_position[X_AXIS]-backwards_step_size) 
+      || path_history[0][X_AXIS] > (sys_position[X_AXIS]+backwards_step_size) 
+      || path_history[0][Y_AXIS] < (sys_position[Y_AXIS]-backwards_step_size) 
+      || path_history[0][Y_AXIS] > (sys_position[Y_AXIS]+backwards_step_size))
+      {
+        gap_add_pos_to_history();
+      }
+    }
     // Determine if we need to load a new planner block or if the block needs to be recomputed.
     if (pl_block == NULL) {
 

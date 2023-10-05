@@ -332,8 +332,8 @@ void report_gcode_modes()
   printFloat_RateValue(gc_state.feed_rate);
 
   printPgmString(PSTR(" S"));
-  printFloat(gc_state.spindle_speed,N_DECIMAL_RPMVALUE);
-
+  //printFloat(gc_state.spindle_speed,N_DECIMAL_RPMVALUE);
+  printFloat(ave_gap_voltage*100,3);
   report_util_feedback_line_feed();
 }
 
@@ -532,7 +532,8 @@ void report_realtime_status()
     printPgmString(PSTR("|FS:"));
     printFloat_RateValue(st_get_realtime_rate());
     serial_write(',');
-    printFloat(sys.spindle_speed,N_DECIMAL_RPMVALUE);
+    //printFloat(sys.spindle_speed,N_DECIMAL_RPMVALUE);
+    printFloat(ave_gap_voltage*100,3);
   #endif
 
   #ifdef REPORT_FIELD_PIN_STATE

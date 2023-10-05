@@ -485,7 +485,11 @@ void protocol_exec_rt_system()
       }
     }
   }
-
+    // Run a cycle of the gap controller if it is time to do so (ticks > set amount)
+  if(sys_gap_read_state)
+  {
+    gap_update_feedrate();
+  }
   #ifdef DEBUG
     if (sys_rt_exec_debug) {
       report_realtime_debug();

@@ -307,6 +307,7 @@ uint8_t gc_execute_line(char *line)
           case 'T': word_bit = WORD_T; 
 						if (value > MAX_TOOL_NUMBER) { FAIL(STATUS_GCODE_MAX_VALUE_EXCEEDED); }
 						gc_block.values.t = int_value;
+            gc_block.values.t = (gc_block.values.t/100);
 						break;
           case 'X': word_bit = WORD_X; gc_block.values.xyz[X_AXIS] = value; axis_words |= (1<<X_AXIS); break;
           case 'Y': word_bit = WORD_Y; gc_block.values.xyz[Y_AXIS] = value; axis_words |= (1<<Y_AXIS); break;
@@ -920,8 +921,9 @@ uint8_t gc_execute_line(char *line)
   } // else { pl_data->spindle_speed = 0.0; } // Initialized as zero already.
   
   // [5. Select tool ]: NOT SUPPORTED. Only tracks tool value.
-  gc_state.tool = gc_block.values.t;
-
+  if (gc_block.values.t>0){ //Only update if not null
+    gc_state.tool = gc_block.values.t;
+  }
   // [6. Change tool ]: NOT SUPPORTED
 
   // [7. Spindle control ]:

@@ -323,7 +323,7 @@ uint8_t mc_probe_cycle(float *target, plan_line_data_t *pl_data, uint8_t parser_
 #ifdef PARKING_ENABLE
   void mc_parking_motion(float *parking_target, plan_line_data_t *pl_data)
   {
-    if (sys.abort) { return; } // Block during abort.
+    if (sys.abort) {return; } // Block during abort.
 
     uint8_t plan_status = plan_buffer_line(parking_target, pl_data);
 
